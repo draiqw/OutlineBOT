@@ -1,4 +1,8 @@
 # constants.py
+import os
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+BASE_API_URL = os.getenv("BASE_API_URL")
+DATABASE = "users.db"
 
 BUTTON_REGISTRATION = "🔥 Регистрация"
 BUTTON_GET_KEY = "🚀 Получить ключ"
@@ -71,10 +75,6 @@ MENU_MESSAGE = (
     "/info - информация и гайды"
 )
 
-BOT_TOKEN = "7587969714:AAFJZDXig9ZcYUJ4GUDu-Lbqy0h43cvw9mI"
-BASE_API_URL = "https://88.218.171.165:50406/j1JwWvOIScy1f9VjY_dgvg"
-DATABASE = "users.db"
 KEY_NAME = 1
 
 SUBSCRIBE_END = "⚠️ Ваша подписка закончилась. Обновите её командой <b>/subscribe</b>."
-
