@@ -30,6 +30,7 @@ jobs:
           source: "telegram_bot.tar"
           target: "/tmp/telegram_bot.tar"
 
+
       - name: Load Docker image on server and run container
         uses: appleboy/ssh-action@master
         with:
@@ -37,6 +38,8 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            # Удаляем целевой путь, если он существует как директория или файл
+            rm -rf /tmp/telegram_bot.tar
             docker load -i /tmp/telegram_bot.tar
             docker stop my_bot || true
             docker rm my_bot || true
