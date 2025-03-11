@@ -18,6 +18,9 @@ jobs:
       - name: Save Docker image as tar archive
         run: docker save telegram_bot -o telegram_bot.tar
 
+      - name: Fix permissions on tar file
+        run: chmod 644 telegram_bot.tar
+
       - name: Copy image to server
         uses: appleboy/scp-action@master
         with:
