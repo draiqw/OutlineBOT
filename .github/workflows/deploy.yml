@@ -1,4 +1,4 @@
-name: Deploy Telegram Bot
+name: Deploy to Server
 
 on:
   push:
@@ -15,5 +15,26 @@ jobs:
       - name: Build Docker image
         run: docker build -t telegram_bot .
 
-      - name: Run container with secrets
-        run: docker run -d --name my_bot -e BOT_TOKEN=${{ secrets.BOT_TOKEN }} -e BASE_API_URL=${{ secrets.BASE_API_URL }} telegram_bot
+      - name: Save Docker image as tar archive
+        run: docker save telegram_bot -o telegram_bot.tar
+
+      - name: Copy image to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "telegram_bot.tar"
+          target: "/tmp/telegram_bot.tar"
+
+      - name: Load Docker image on server and run container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker load -i /tmp/telegram_bot.tar
+            docker stop my_bot || true
+            docker rm my_bot || true
+            docker run -d --name my_bot -e BOT_TOKEN=${{ secrets.BOT_TOKEN }} -e BASE_API_URL=${{ secrets.BASE_API_URL }} telegram_bot
