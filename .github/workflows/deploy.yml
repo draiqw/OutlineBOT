@@ -16,7 +16,4 @@ jobs:
         run: docker build -t telegram_bot .
 
       - name: Run container with secrets
-        run: docker run -d --name my_bot \
-          -e BOT_TOKEN=${{ secrets.BOT_TOKEN }} \
-          -e BASE_API_URL=${{ secrets.BASE_API_URL }} \
-          telegram_bot
+        run: docker run -d --name my_bot -e BOT_TOKEN=${{ secrets.BOT_TOKEN }} -e BASE_API_URL=${{ secrets.BASE_API_URL }} telegram_bot
