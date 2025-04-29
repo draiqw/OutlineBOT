@@ -1,5 +1,4 @@
 # keys.py
-
 import requests
 from constants import BASE_API_URL
 
@@ -14,7 +13,14 @@ def create_outline_key(name=""):
     if name:
         payload["name"] = name
     try:
-        response = requests.post(url, json=payload, headers=headers, verify=False, timeout=30)
+        response = requests.post(
+            url,
+            json=payload,
+            headers=headers,
+            verify=False,
+            timeout=30
+        )
+
         if response.status_code in (200, 201):
             data = response.json()
             access_url = data.get("accessUrl")

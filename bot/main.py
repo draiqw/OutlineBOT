@@ -1,9 +1,12 @@
 # main.py
-
 import os
 import re
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
+
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=".env")
+
 from constants import (
     BOT_TOKEN, 
     BUTTON_GET_KEY, 
@@ -15,6 +18,7 @@ from constants import (
     BUTTON_REGISTRATION,
     BUTTON_INFO
 )
+from dotenv import load_dotenv
 from database import init_db
 from handlers import (
     start, 
